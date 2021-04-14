@@ -22,10 +22,13 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('assignment2');
   });
 
-  it('should render title', () => {
+  it('should have dialog service', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('assignment2 app is running!');
+    const app = fixture.componentInstance;
+    expect(app.dialogService).toBeTruthy();
   });
+
+  // should have button to open a dialog
+  // should have a button to close the dialog
+  // should open dialog when click the button
 });

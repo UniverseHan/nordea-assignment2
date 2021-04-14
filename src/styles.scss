@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+$dialog-container-z-index: 1000 !default;
+
+.dialog-container {
+  position: fixed;
+  z-index: $dialog-container-z-index;
+
+  background-color: RGBA(0, 0, 0, 0.1);
+
+  pointer-events: none;
+
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:empty {
+    display: none;
+  }
+}

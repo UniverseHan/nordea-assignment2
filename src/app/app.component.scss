@@ -1,0 +1,12 @@
+$dialog-container-z-index: 1000 !default;
+
+.dialog-container {
+  position: fixed;
+  z-index: $dialog-container-z-index;
+
+  background-color: black;
+
+  &:empty {
+    display: none;
+  }
+}
