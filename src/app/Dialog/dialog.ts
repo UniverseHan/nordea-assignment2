@@ -8,9 +8,12 @@ import {
   Injectable,
   Inject,
   Injector,
-  OnDestroy
+  OnDestroy,
+  Type
 } from '@angular/core';
 import { DialogContainer } from './dialog-container';
+
+
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +23,8 @@ export class Dialog implements OnDestroy {
   protected container: HTMLElement;
   private _disposeFn: (() => void) | null;
 
+  
+
   constructor(@Inject(DOCUMENT) document: any, 
     private componentFactoryResolver: ComponentFactoryResolver, 
     private _defaultInjector: Injector,
@@ -27,9 +32,10 @@ export class Dialog implements OnDestroy {
     this._document = document;
   }
 
-  
-
-  open(title) {
+  open(title, contentCompoent?: Type<any>, config?: {
+    data?: any,
+    injector?: Injector
+  }) {
     if (!this.container) {
       this.container = this._createOveray();
       this._document.body.append(this.container);
@@ -40,12 +46,18 @@ export class Dialog implements OnDestroy {
     const dialogContinaerRef = componentFactory.create(this._defaultInjector);
 
     this._appRef.attachView(dialogContinaerRef.hostView);
-      this.setDisposeFn(() => {
-        this._appRef.detachView(dialogContinaerRef.hostView);
-        dialogContinaerRef.destroy();
-      });
-
+    this.setDisposeFn(() => {
+      this._appRef.detachView(dialogContinaerRef.hostView);
+      dialogContinaerRef.destroy();
+    });
     dialogContinaerRef.instance.title = title;
+
+    if (contentCompoent) {
+      dialogContinaerRef.instance.setComponent(contentCompoent, config);
+    }
+
+    
+
     this.container.appendChild(this._getComponentRootNode(dialogContinaerRef));
   }
 

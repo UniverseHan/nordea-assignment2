@@ -1,10 +1,8 @@
 <div class="content-container">
   <div class="header">
     <h1 class="dialog-title">{{ title }}</h1>
-    <div class="dialog-close">x</div>
+    <button class="dialog-close" (click)="close()">x</button>
   </div>
   
-  <div class="content-body">
-    This is Content body
-  </div>
+  <ng-template class="content-body" dialogContent></ng-template>
 </div>

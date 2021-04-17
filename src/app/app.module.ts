@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
+import { AppComponent , TestComponent} from './app.component';
 import { Dialog } from './Dialog/dialog';
+import { DialogContainer, DialogContentDirective } from './Dialog/dialog-container';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent, DialogContentDirective, DialogContainer
   ],
   imports: [
-    BrowserModule
+    BrowserModule, FormsModule
   ],
   providers: [Dialog],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [TestComponent]
 })
 export class AppModule { }
