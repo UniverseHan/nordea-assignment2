@@ -51,7 +51,7 @@ export class Dialog implements OnDestroy {
 
     if (contentCompoent) {
       dialogContinaerRef.instance.setComponent(contentCompoent, {
-        data: config.data,
+        data: (config && config.data) || {},
         injector
       });
     }    

@@ -50,18 +50,6 @@ describe('dialog', () => {
     expect(titleElement).not.toBeNull('Expected the dialog title in the DOM after opening dialog');
     expect(titleElement.textContent).toEqual('Hello Dialog');
   });
-
-  it('should not have title after close', () => {
-
-  });
-  // should have dialog
-  // should title
-  // should have close button
-  // should have width as specified
-  // should have height as specified
-
-  // Data binding
-  // event
 });
 
 @Directive({selector: 'dir-with-view-container'})
