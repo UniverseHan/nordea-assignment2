@@ -15,9 +15,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 ## Running end-to-end tests
-I just show that I can implement end to end test cases using protractor.
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+No e2e tests
 
 ## Hot to use
 Before using it, add `DialogModule` into your ngModule.
@@ -126,7 +124,7 @@ it should be albe to use from other module or even other application. it might b
 - [x] close button
 - [ ] passing dialog result back to parent.
 - [ ] notify data change event back to the parent.
-- [ ] be able to bind close action from any element of content component
+- [x] be able to bind close action from any element of content component
 - [ ] multiple dialog support
 - [ ] change dialog appearances
 - [ ] open dialog from Dialog
@@ -168,6 +166,7 @@ To create component dynamically - ComponentFactoryResolver, ComponentFactory,
 To make changeable - adding it as a app reference using `this._appRef.attachView(componentRef.hostView);`.
 
 ## data binding
+Just simply passing object, it chould be improved using directive way.
 
 ### bind close button
 To give content compoent way to close, I have been thinking about two ways of implementation
