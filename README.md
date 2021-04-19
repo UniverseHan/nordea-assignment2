@@ -11,11 +11,88 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Running unit tests
 
+
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 ## Running end-to-end tests
+I just show that I can implement end to end test cases using protractor.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+## Hot to use
+Before using it, add `DialogModule` into your ngModule.
+
+#### Simple example
+```javascript
+dialog.open("This is title");
+```
+
+#### open with Component
+```javascript
+
+@Component{
+  template: `<h3>Alert</h3><p>There is no enough money to purchase.</p><button></button>`
+}
+class NotEnoughMoneyAlert {}
+
+//...
+dialog.open("Purchase Error", NotEnoughMoneyAlert);
+```
+
+#### Data binding
+You can pass the data, passing {data: any} into open() method
+```javascript
+@Component({
+  template: `
+    <div">
+      <h1>{{ data.title }}</h1>
+      <h4>{{ data.body }}</h4>
+    </div>
+  `
+})
+export class HelloData implements AdComponent {
+  @Input() data: any;
+}
+
+// open with data
+this.dialogService.open('Hello Dialog', HelloData, {
+  data: {
+    headline: "Helloi",
+    body: "hahahaha this is body"
+  }
+});
+```
+
+#### closing dialog
+```javascript
+// using injecting dialog reference
+@Component({
+  template: `
+    <button (clock)="handleSubmit">Submit</button>
+  `
+})
+export class ConfirmSubmitComponent implements OnInit {
+  constructor(private dialog: Dialog) 
+  {}
+
+  handleSubmit() {
+    this.dialog.close(null);
+  }
+}
+
+this.dialogService.open('Hello Dialog', ConfirmSubmitComponent);
+
+// using directive
+// you can just add directive on the element what you want 
+@Component({
+  template: `
+    <button dialog-close>Submit</button>
+  `
+})
+export class ConfirmSubmitComponent{}
+
+this.dialogService.open('Hello Dialog', ConfirmSubmitComponent);
+```
 
 ## requirements
 - Dialog should be able to have any Compoent as a its content,
@@ -46,12 +123,13 @@ it should be albe to use from other module or even other application. it might b
 - [x] pass data into dialog content
 - [x] single dialog support
 - [x] encapsulate dialog as a module
-- [ ] close button
+- [x] close button
 - [ ] passing dialog result back to parent.
 - [ ] notify data change event back to the parent.
 - [ ] be able to bind close action from any element of content component
 - [ ] multiple dialog support
 - [ ] change dialog appearances
+- [ ] open dialog from Dialog
 
 ## Implementation Details
 ### Dialog service
