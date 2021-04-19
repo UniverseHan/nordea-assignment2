@@ -6,11 +6,11 @@ import {
   Directive,
   ViewContainerRef,
   ViewChild,
-  ElementRef,
-  Type
+  Type,
+  Injector
 } from '@angular/core';
 
-import {AdComponent} from './dialog-content';
+import {Dialog} from './dialog';
 
 @Directive({
   selector: '[dialogContent]',
@@ -20,7 +20,6 @@ export class DialogContentDirective implements OnInit{
 
   ngOnInit() {}
 }
-
 
 @Component({
   selector: 'dialog-container',
@@ -33,23 +32,28 @@ export class DialogContentDirective implements OnInit{
 export class DialogContainer implements OnInit {
   @Input() title: string;
   @ViewChild(DialogContentDirective, {static: true}) dialogContent: DialogContentDirective;
-  
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
+  constructor(
+    private componentFactoryResolver: ComponentFactoryResolver, 
+    private dialog: Dialog) {
 
-  ngOnInit() {}
-  close() {
-    alert("close");
   }
 
+  ngOnInit() {}
+
   setComponent(contentCompoent?: Type<any>, config?: {
-    data?: any
+    data?: any;
+    injector: Injector
   }) {
     if (contentCompoent) {
       const contentComponentFactory = this.componentFactoryResolver.resolveComponentFactory(contentCompoent);
       const viewContainerRef = this.dialogContent.viewContainerRef;
-      const componentRef = viewContainerRef.createComponent(contentComponentFactory);
+      const componentRef = viewContainerRef.createComponent(contentComponentFactory, null, config.injector);
       componentRef.instance.data = config.data;
     }
+  }
+
+  handleClose() {
+    this.dialog.close(this);
   }
 }
 

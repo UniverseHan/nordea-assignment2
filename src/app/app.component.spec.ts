@@ -31,4 +31,20 @@ describe('AppComponent', () => {
   // should have button to open a dialog
   // should have a button to close the dialog
   // should open dialog when click the button
+
+  // dialog1 should have compoent1
+
+  // dialog2 should have compoent2
+
+  // data should be placed in the dialog
+
+  // data should be palced form
+
+  // dialog should be closed by click x button.
+
+  // dialog should be closed by click any custom button.
+
+  // component beging added to dialog should be notified event fired from dialog.
+
+  
 });

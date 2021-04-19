@@ -1,7 +1,10 @@
-import { Component, Injector, Input , ViewChild} from '@angular/core';
+import { Component, Injector, Input } from '@angular/core';
+
 import { Dialog } from './Dialog/dialog';
 import {AdComponent} from './Dialog/dialog-content';
-import { DialogContentDirective } from './Dialog/dialog-container';
+
+import { PurchaseDialogComponent } from './purchase.dialog.component'
+
 
 @Component({
   selector: 'app-root',
@@ -14,12 +17,11 @@ export class AppComponent {
   constructor(public dialogService: Dialog, public injector: Injector) {}
 
   openDialog() {
-    this.dialogService.open('Hello Dialog', HeroJobAdComponent, {
+    this.dialogService.open('Hello Dialog', PurchaseDialogComponent, {
       data: {
         headline: "Helloi",
         body: "hahahaha this is body"
-      },
-      injector: this.injector
+      }
     });
   }
 }
@@ -35,14 +37,5 @@ export class HeroJobAdComponent implements AdComponent {
   @Input() data: any;
 }
 
-@Component({
-  selector: 'test-component',
-  template: `
-    <div class="job-ad">
-      <h1> Test Component</h1>
-    </div>
-  `
-})
-export class TestComponent {
-  @Input() data: any;
-}
+
+

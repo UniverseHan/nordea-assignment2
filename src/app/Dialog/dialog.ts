@@ -9,11 +9,10 @@ import {
   Inject,
   Injector,
   OnDestroy,
-  Type
+  Type,
+  StaticProvider
 } from '@angular/core';
 import { DialogContainer } from './dialog-container';
-
-
 
 @Injectable({
   providedIn: 'root',
@@ -21,9 +20,7 @@ import { DialogContainer } from './dialog-container';
 export class Dialog implements OnDestroy {
   protected _document: Document;
   protected container: HTMLElement;
-  private _disposeFn: (() => void) | null;
-
-  
+  private _disposeFn: (() => void) | null;  
 
   constructor(@Inject(DOCUMENT) document: any, 
     private componentFactoryResolver: ComponentFactoryResolver, 
@@ -33,15 +30,13 @@ export class Dialog implements OnDestroy {
   }
 
   open(title, contentCompoent?: Type<any>, config?: {
-    data?: any,
-    injector?: Injector
+    data?: any
   }) {
     if (!this.container) {
       this.container = this._createOveray();
       this._document.body.append(this.container);
     }
 
-    // create angular compoent dynamically
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(DialogContainer);
     const dialogContinaerRef = componentFactory.create(this._defaultInjector);
 
@@ -52,13 +47,32 @@ export class Dialog implements OnDestroy {
     });
     dialogContinaerRef.instance.title = title;
 
-    if (contentCompoent) {
-      dialogContinaerRef.instance.setComponent(contentCompoent, config);
-    }
+    const injector = this.createInjector(dialogContinaerRef);
 
-    
+    if (contentCompoent) {
+      dialogContinaerRef.instance.setComponent(contentCompoent, {
+        data: config.data,
+        injector
+      });
+    }    
 
     this.container.appendChild(this._getComponentRootNode(dialogContinaerRef));
+  }
+
+  close(dialogContainer: DialogContainer) {
+    this.dispose();
+  }
+
+  createInjector(dialogContinaerRef: ComponentRef<DialogContainer>): Injector {
+    const providers: StaticProvider[] = [
+      {provide: DialogContainer, useValue: dialogContinaerRef.instance},
+      {provide: Dialog, useValue: this}
+    ];
+
+    return Injector.create({
+      parent: this._defaultInjector,
+      providers
+    });
   }
 
   ngOnDestroy() {
@@ -83,7 +97,7 @@ export class Dialog implements OnDestroy {
   setDisposeFn(fn: () => void) {
     this._disposeFn = fn;
   }
-
+ 
   dispose(): void {
     this._invokeDisposeFn();
   }

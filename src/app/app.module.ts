@@ -1,20 +1,22 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent , TestComponent} from './app.component';
-import { Dialog } from './Dialog/dialog';
-import { DialogContainer, DialogContentDirective } from './Dialog/dialog-container';
-import {FormsModule} from '@angular/forms';
+import { AppComponent } from './app.component';
+import { PurchaseDialogComponent } from './purchase.dialog.component';
+import { DialogModule } from './Dialog/dialog-module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AppComponent, DialogContentDirective, DialogContainer
+    AppComponent, 
+    PurchaseDialogComponent
   ],
   imports: [
-    BrowserModule, FormsModule
+    BrowserModule, 
+    FormsModule,
+    ReactiveFormsModule,
+    DialogModule
   ],
-  providers: [Dialog],
-  bootstrap: [AppComponent],
-  entryComponents: [TestComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
